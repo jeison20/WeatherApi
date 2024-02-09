@@ -20,6 +20,7 @@ namespace Weather.Domain
 
             var mapper = new Mapper(config);
             return mapper;
+
         }
     }
 }
