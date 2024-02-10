@@ -14,5 +14,7 @@ namespace Weather.Domain.POCOs
         public string City { get; set; }
 
         public string Info { get; set; }
+
+        public DateTime Date { get; set; } = DateTime.Now;
     }
 }

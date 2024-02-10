@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System.Net;
 using Weather.Domain.Dtos;
@@ -34,9 +35,15 @@ namespace Weather.Domain.Services
         }
 
         public List<SearchHistoryDto> GetCheckRecordsInformation(List<SearchHistory> searchHistories)
-        { 
+        {
+
+            var ultimosRegistros = searchHistories
+            .GroupBy(r => r.City)
+            .Select(g => g.OrderByDescending(r => r.Date).First()).ToList();
+
+
             var mapper = MapperConfig.InitializeAutomapper();
-            List<SearchHistoryDto> lsSearchHistoriesDto = mapper.Map<List<SearchHistoryDto>>(searchHistories);          
+            List<SearchHistoryDto> lsSearchHistoriesDto = mapper.Map<List<SearchHistoryDto>>(ultimosRegistros);          
            
 
             return lsSearchHistoriesDto.Distinct().ToList();
